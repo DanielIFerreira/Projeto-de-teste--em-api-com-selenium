@@ -10,7 +10,7 @@ public class RestUtils {
 
     private static Response response;
 
-    public Response getResponse() {
+    public static Response getResponse() {
         return response;
     }
 

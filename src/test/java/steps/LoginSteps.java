@@ -34,4 +34,5 @@ public class LoginSteps {
         RestUtils.setBaseURI();
         LoginMap.getLogin().putAll(map);
     }
+
 }

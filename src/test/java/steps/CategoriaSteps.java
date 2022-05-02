@@ -16,14 +16,6 @@ public class CategoriaSteps {
 
     Map<String, String> header = new HashMap<>();
 
-    @Dada("que tenha realizado o login com dados validos")
-    public void queTenhaRealizadoOLoginComDadosValidos() {
-        LoginMap.initLogin();
-        RestUtils.setBaseURI();
-        RestUtils.post(LoginMap.getLogin(), ContentType.JSON, "auth");
-        LoginMap.token = RestUtils.getResponse().jsonPath().get("token");
-    }
-
     @Dada("que tenha um playload da API de Categoria")
     public void queTenhaUmPlayloadDaAPIDeCategoria() {
         RestUtils.setBaseURI();
@@ -36,21 +28,17 @@ public class CategoriaSteps {
 
     }
 
+    @Dado("que altere o campo {string} para {string} do header de Login")
+    public void queAltereOCampoParaDoHeaderDeLogin(String key, String value) {
+        header.put(key, value);
+
+    }
+
     @Entao("valido que recebo um status {int} no response")
     public void validoQueReceboUmStatusNoResponse(int status) {
         Assert.assertEquals(status, RestUtils.getResponse().getStatusCode());
 
     }
 
-    @Entao("valido que no campo {string} possui o valor {string}")
-    public void validoQueNoCampoPossuiOValor(String key, String value) {
-        Assert.assertEquals(value, RestUtils.getResponse().jsonPath().get(key));
 
-    }
-
-    @Dado("que altere o campo {string} para {string} do header de Login")
-    public void queAltereOCampoParaDoHeaderDeLogin(String key, String value) {
-        header.put(key, value);
-
-    }
 }

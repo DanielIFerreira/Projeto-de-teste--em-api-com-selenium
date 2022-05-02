@@ -1,6 +1,7 @@
 package steps;
 
 import io.cucumber.java.pt.Dada;
+import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Entao;
 import io.cucumber.java.pt.Quando;
 import io.restassured.http.ContentType;
@@ -44,6 +45,12 @@ public class CategoriaSteps {
     @Entao("valido que no campo {string} possui o valor {string}")
     public void validoQueNoCampoPossuiOValor(String key, String value) {
         Assert.assertEquals(value, RestUtils.getResponse().jsonPath().get(key));
+
+    }
+
+    @Dado("que altere o campo {string} para {string} do header de Login")
+    public void queAltereOCampoParaDoHeaderDeLogin(String key, String value) {
+        header.put(key, value);
 
     }
 }

@@ -35,4 +35,12 @@ public class LoginSteps {
         LoginMap.getLogin().putAll(map);
     }
 
+    @Dada("que tenha realizado o login com dados validos")
+    public void queTenhaRealizadoOLoginComDadosValidos() {
+        LoginMap.initLogin();
+        RestUtils.setBaseURI();
+        RestUtils.post(LoginMap.getLogin(), ContentType.JSON, "auth");
+        LoginMap.token = RestUtils.getResponse().jsonPath().get("token");
+    }
+
 }

@@ -1,6 +1,6 @@
 package steps;
 
-import io.cucumber.java.pt.Dada;
+
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Entao;
 import io.cucumber.java.pt.Quando;
@@ -11,12 +11,13 @@ import utils.RestUtils;
 import java.util.Map;
 
 public class LoginSteps {
-    //String url = "http://localhost:8080/";
 
-    @Dado("que tenha um payload validdo da API de Login")
-    public void queTenhaUmPayloadValiddoDaAPIDeLogin() {
+    String url = "http://localhost:8080/";
+
+    @Dado("que tenha um payload valido da API de Login")
+    public void queTenhaUmPayloadValidoDaAPIDeLogin() {
         LoginMap.initLogin();
-        RestUtils.setBaseURI();
+        RestUtils.setBaseURI(url);
     }
     @Quando("envio uma requisicao do tipo POST de Login")
     public void envioUmaRequisicaoDoTipoPOSTDeLogin() {
@@ -28,19 +29,17 @@ public class LoginSteps {
         LoginMap.token = RestUtils.getResponse().jsonPath().get("token");
     }
 
-    @Dada("que tenha um payload da API do Login com as seguintes informacoes")
-    public void queTenhaUmPayloadDaAPIDoLoginComAsSeguintesInformacoes(Map<String, String> map) {
+    @Dado("que tenha um payload da API de Login com as seguintes informacoes")
+    public void queTenhaUmPayloadDaAPIDeLoginComAsSeguintesInformacoes(Map<String, String> map) {
         LoginMap.initLogin();
-        RestUtils.setBaseURI();
+        RestUtils.setBaseURI(url);
         LoginMap.getLogin().putAll(map);
     }
 
-    @Dada("que tenha realizado o login com dados validos")
+    @Dado("que tenha realizado o login com dados validos")
     public void queTenhaRealizadoOLoginComDadosValidos() {
-        LoginMap.initLogin();
-        RestUtils.setBaseURI();
-        RestUtils.post(LoginMap.getLogin(), ContentType.JSON, "auth");
-        LoginMap.token = RestUtils.getResponse().jsonPath().get("token");
+        queTenhaUmPayloadValidoDaAPIDeLogin();
+        envioUmaRequisicaoDoTipoPOSTDeLogin();
+        armazenoOTokenQueReceboDoResponseDeLogin();
     }
-
 }

@@ -14,20 +14,12 @@ public class RestUtils {
         return response;
     }
 
-    public static void setBaseURI(){
-        RestAssured.baseURI = "http://localhost:8080/";
+    public static void setBaseURI(String uri){
+        RestAssured.baseURI = uri;
     }
+
     public static String getBaseURI(){
         return RestAssured.baseURI;
-    }
-
-    public static Response get(Map<String, String> header, String endpoint) {
-        return response = RestAssured.given()
-                .relaxedHTTPSValidation()
-                .headers(header)
-                .when()
-                .get(endpoint);
-
     }
 
     public static Response post(Object json, ContentType contentType, String endpoint){
@@ -38,10 +30,10 @@ public class RestUtils {
                 .when()
                 .post(endpoint)
                 .thenReturn();
-
     }
 
-    public static Response post(Map<String, String> header,Object json, ContentType contentType, String endpoint){
+    public static Response post(Map<String, String> header, Object json,
+                                ContentType contentType, String endpoint){
         return response = RestAssured.given()
                 .relaxedHTTPSValidation()
                 .contentType(contentType)
@@ -50,7 +42,36 @@ public class RestUtils {
                 .when()
                 .post(endpoint)
                 .thenReturn();
-
     }
 
+    public static Response put(Map<String, String> header, Object json,
+                                ContentType contentType, String endpoint){
+        return response = RestAssured.given()
+                .relaxedHTTPSValidation()
+                .contentType(contentType)
+                .headers(header)
+                .body(json)
+                .when()
+                .put(endpoint)
+                .thenReturn();
+    }
+
+    public static Response get(Map<String, String> header, String endpoint) {
+        return response = RestAssured.given()
+                .relaxedHTTPSValidation()
+                .headers(header)
+                .when()
+                .get(endpoint)
+                .thenReturn();
+    }
+
+    public static Response get(Map<String, String> header, Map<String, Object>param, String endpoint) {
+        return response = RestAssured.given()
+                .relaxedHTTPSValidation()
+                .headers(header)
+                .params(param)
+                .when()
+                .get(endpoint)
+                .thenReturn();
+    }
 }
